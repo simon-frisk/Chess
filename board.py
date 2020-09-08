@@ -41,11 +41,13 @@ class Board:
         for piece in self.pieces:
             piece.render(surface, self.get_box_dimensions)
 
+    def move_piece(self, piece, row, column):
+        piece.row = row
+        piece.column = column
+
     def get_piece(self, row, column):
-        print(row, column)
         for piece in self.pieces:
             if(piece.row == row and piece.column == column):
-                print(piece.row, piece.column)
                 return piece
 
     def get_box_color(self, row, column):
