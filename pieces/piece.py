@@ -17,13 +17,14 @@ class PieceColor(enum.Enum):
 
 
 class Piece:
-    def __init__(self, row, column, piece_color, piece_type):
+    def __init__(self, board, row, column, piece_color, piece_type):
         self.column = column
         self.row = row
         self.piece_color = piece_color
         self.piece_type = piece_type
+        self.board = board
 
-    def render(self, surface, get_box_dimensions):
+    def render(self, surface):
         img = FONT.render(self.piece_color.value +
                           self.piece_type.value, True, (255, 0, 0))
-        surface.blit(img, get_box_dimensions(self.row, self.column))
+        surface.blit(img, self.board.get_box_dimensions(self.row, self.column))

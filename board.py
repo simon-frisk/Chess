@@ -13,23 +13,23 @@ class Board:
 
     def __init__(self):
         self.pieces = [
-            Pawn(1, 0, PieceColor.BLACK),
-            Pawn(1, 1, PieceColor.BLACK),
-            Pawn(1, 2, PieceColor.BLACK),
-            Pawn(1, 3, PieceColor.BLACK),
-            Pawn(1, 4, PieceColor.BLACK),
-            Pawn(1, 5, PieceColor.BLACK),
-            Pawn(1, 6, PieceColor.BLACK),
-            Pawn(1, 7, PieceColor.BLACK),
-            Pawn(6, 0, PieceColor.WHITE),
-            Pawn(6, 1, PieceColor.WHITE),
-            Pawn(6, 2, PieceColor.WHITE),
-            Pawn(6, 3, PieceColor.WHITE),
-            Pawn(6, 4, PieceColor.WHITE),
-            Pawn(6, 5, PieceColor.WHITE),
-            Pawn(6, 6, PieceColor.WHITE),
-            Pawn(6, 7, PieceColor.WHITE),
-            Queen(5, 4, PieceColor.WHITE),
+            Pawn(self, 1, 0, PieceColor.BLACK),
+            Pawn(self, 1, 1, PieceColor.BLACK),
+            Pawn(self, 1, 2, PieceColor.BLACK),
+            Pawn(self, 1, 3, PieceColor.BLACK),
+            Pawn(self, 1, 4, PieceColor.BLACK),
+            Pawn(self, 1, 5, PieceColor.BLACK),
+            Pawn(self, 1, 6, PieceColor.BLACK),
+            Pawn(self, 1, 7, PieceColor.BLACK),
+            Pawn(self, 6, 0, PieceColor.WHITE),
+            Pawn(self, 6, 1, PieceColor.WHITE),
+            Pawn(self, 6, 2, PieceColor.WHITE),
+            Pawn(self, 6, 3, PieceColor.WHITE),
+            Pawn(self, 6, 4, PieceColor.WHITE),
+            Pawn(self, 6, 5, PieceColor.WHITE),
+            Pawn(self, 6, 6, PieceColor.WHITE),
+            Pawn(self, 6, 7, PieceColor.WHITE),
+            Queen(self, 5, 4, PieceColor.WHITE),
         ]
 
     def render(self, surface):
@@ -39,7 +39,7 @@ class Board:
                     row, column), self.get_box_dimensions(row, column))
 
         for piece in self.pieces:
-            piece.render(surface, self.get_box_dimensions)
+            piece.render(surface)
 
     def move_piece(self, piece, row, column):
         piece.row = row
