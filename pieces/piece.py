@@ -6,9 +6,9 @@ FONT = pygame.font.SysFont(None, 40)
 
 
 class PieceType(enum.Enum):
-    PAWN = 'P'
-    KING = 'K'
-    QUEEN = 'Q'
+    PAWN = 'PAWN'
+    KING = 'KING'
+    QUEEN = 'QUEEN'
 
 
 class PieceColor(enum.Enum):
@@ -23,8 +23,12 @@ class Piece:
         self.piece_color = piece_color
         self.piece_type = piece_type
         self.board = board
+        image = pygame.image.load(
+            f'./pieces/images/{piece_color.value}_{piece_type.value}.png')
+        image = pygame.transform.scale(
+            image, (board.BOX_WIDTH, board.BOX_WIDTH))
+        self.image = image
 
     def render(self, surface):
-        img = FONT.render(self.piece_color.value +
-                          self.piece_type.value, True, (255, 0, 0))
-        surface.blit(img, self.board.get_box_dimensions(self.row, self.column))
+        surface.blit(self.image, self.board.get_box_dimensions(
+            self.row, self.column))
