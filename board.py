@@ -1,7 +1,11 @@
 import pygame
 import math
 from pieces.pawn import Pawn
+from pieces.rook import Rook
+from pieces.knight import Knight
+from pieces.bishop import Bishop
 from pieces.queen import Queen
+from pieces.king import King
 from pieces.piece import PieceType, PieceColor
 
 
@@ -13,6 +17,14 @@ class Board:
 
     def __init__(self):
         self.pieces = [
+            Rook(self, 0, 0, PieceColor.BLACK),
+            Knight(self, 0, 1, PieceColor.BLACK),
+            Bishop(self, 0, 2, PieceColor.BLACK),
+            Queen(self, 0, 3, PieceColor.BLACK),
+            King(self, 0, 4, PieceColor.BLACK),
+            Bishop(self, 0, 5, PieceColor.BLACK),
+            Knight(self, 0, 6, PieceColor.BLACK),
+            Rook(self, 0, 7, PieceColor.BLACK),
             Pawn(self, 1, 0, PieceColor.BLACK),
             Pawn(self, 1, 1, PieceColor.BLACK),
             Pawn(self, 1, 2, PieceColor.BLACK),
@@ -29,7 +41,14 @@ class Board:
             Pawn(self, 6, 5, PieceColor.WHITE),
             Pawn(self, 6, 6, PieceColor.WHITE),
             Pawn(self, 6, 7, PieceColor.WHITE),
-            Queen(self, 5, 4, PieceColor.WHITE),
+            Rook(self, 7, 0, PieceColor.WHITE),
+            Knight(self, 7, 1, PieceColor.WHITE),
+            Bishop(self, 7, 2, PieceColor.WHITE),
+            Queen(self, 7, 3, PieceColor.WHITE),
+            King(self, 7, 4, PieceColor.WHITE),
+            Bishop(self, 7, 5, PieceColor.WHITE),
+            Knight(self, 7, 6, PieceColor.WHITE),
+            Rook(self, 7, 7, PieceColor.WHITE),
         ]
 
     def render(self, surface, current_turn_color):

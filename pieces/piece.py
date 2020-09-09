@@ -7,6 +7,9 @@ FONT = pygame.font.SysFont(None, 40)
 
 class PieceType(enum.Enum):
     PAWN = 'PAWN'
+    ROOK = 'ROOK'
+    KNIGHT = 'KNIGHT'
+    BISHOP = 'BISHOP'
     KING = 'KING'
     QUEEN = 'QUEEN'
 
