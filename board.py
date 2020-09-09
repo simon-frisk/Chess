@@ -8,8 +8,8 @@ from pieces.piece import PieceType, PieceColor
 class Board:
     BOX_COUNT = 8
     BOX_WIDTH = 70
-    BLACK = (30, 30, 30)
-    WHITE = (240, 240, 240)
+    BLACK = (80, 40, 20)
+    WHITE = (220, 160, 110)
 
     def __init__(self):
         self.pieces = [
@@ -32,7 +32,7 @@ class Board:
             Queen(self, 5, 4, PieceColor.WHITE),
         ]
 
-    def render(self, surface):
+    def render(self, surface, current_turn_color):
         for row in range(0, self.BOX_COUNT):
             for column in range(0, self.BOX_COUNT):
                 pygame.draw.rect(surface, self.get_box_color(
@@ -40,6 +40,11 @@ class Board:
 
         for piece in self.pieces:
             piece.render(surface)
+
+        turn_line_y = self.BOX_WIDTH * \
+            self.BOX_COUNT if current_turn_color == PieceColor.WHITE else 0
+        pygame.draw.line(surface, (0, 255, 0), (0, turn_line_y),
+                         (self.BOX_COUNT * self.BOX_WIDTH, turn_line_y), 5)
 
     def move_piece(self, piece, row, column):
         piece.row = row

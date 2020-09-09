@@ -4,7 +4,7 @@ from agents.agent import Agent
 
 class User(Agent):
 
-    def handle_box_click(self, row, column):
+    def handle_box_click(self, row, column, switch_turn):
         clicked_possible_move_box = None
         for possible_move_box in self.possible_move_boxes:
             if(possible_move_box['row'] == row and possible_move_box['column'] == column):
@@ -17,6 +17,7 @@ class User(Agent):
             self.board.move_piece(piece, row, column)
             self.selected_box = None
             self.possible_move_boxes = []
+            switch_turn()
 
         else:
             piece = self.board.get_piece(row, column)
