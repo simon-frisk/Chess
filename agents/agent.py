@@ -8,10 +8,10 @@ class Agent:
         self.board = board
         self.color = color
         self.selected_box = None
-        self.possible_move_boxes = []
+        self.selected_box_moves = []
 
     def render(self, surface, BOX_WIDTH):
-        for possible_move_box in self.possible_move_boxes:
+        for possible_move_box in self.selected_box_moves:
             pygame.draw.rect(surface, (200, 100, 100), (possible_move_box['column'] * BOX_WIDTH,
                                                         possible_move_box['row'] * BOX_WIDTH, BOX_WIDTH, BOX_WIDTH), MARKED_BOX_LINE_WIDTH)
         if self.selected_box:
