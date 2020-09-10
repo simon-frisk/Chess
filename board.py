@@ -66,6 +66,10 @@ class Board:
                          (self.BOX_COUNT * self.BOX_WIDTH, turn_line_y), 5)
 
     def move_piece(self, piece, row, column):
+        old_piece = self.get_piece(row, column)
+        if old_piece:
+            self.pieces.remove(old_piece)
+
         piece.row = row
         piece.column = column
 

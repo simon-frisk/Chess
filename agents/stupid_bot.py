@@ -7,7 +7,7 @@ class StupidBot(Agent):
         own_pieces = filter(lambda piece: piece.piece_color ==
                             self.color, self.board.pieces)
         possible_moves = [{'piece': piece, 'move': move}
-                          for piece in own_pieces for move in piece.calculate_possible_move_boxes()]
+                          for piece in own_pieces for move in piece.possible_moves()]
         move = random.choice(possible_moves)
         self.board.move_piece(
             move['piece'], move['move']['row'], move['move']['column'])

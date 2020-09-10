@@ -23,7 +23,7 @@ class User(Agent):
             piece = self.board.get_piece(row, column)
             if piece and piece.piece_color == self.color:
                 self.selected_box = {'row': row, 'column': column}
-                self.possible_move_boxes = piece.calculate_possible_move_boxes()
+                self.possible_move_boxes = piece.possible_moves()
             else:
                 self.selected_box = None
                 self.possible_move_boxes = []

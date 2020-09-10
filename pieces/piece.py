@@ -35,3 +35,26 @@ class Piece:
     def render(self, surface):
         surface.blit(self.image, self.board.get_box_dimensions(
             self.row, self.column))
+
+    def find_possible_in_direction(self, column_step_multiplier, row_step_multiplier, step_limit=None, allow_capture=True, allow_non_capture=True):
+        possible_boxes = []
+        while True:
+            try_steps = len(possible_boxes) + 1
+            column = self.column + try_steps * column_step_multiplier
+            row = self.row + try_steps * row_step_multiplier
+
+            if not (0 <= row <= self.board.BOX_COUNT - 1) or not (0 <= column <= self.board.BOX_COUNT - 1):
+                break
+
+            piece = self.board.get_piece(row, column)
+            if piece and piece.piece_color != self.piece_color and allow_capture:
+                possible_boxes.append({'row': row, 'column': column})
+                break
+            if not piece and allow_non_capture:
+                possible_boxes.append({'row': row, 'column': column})
+                if step_limit and len(possible_boxes) >= step_limit:
+                    break
+            else:
+                break
+
+        return possible_boxes
