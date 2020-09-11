@@ -12,8 +12,8 @@ class Game:
     def turn_agent(self):
         return self._agents[0]
 
-    def turn(self, piece, row, column):
-        board.move_piece(self.pieces, piece, row, column)
+    def turn(self, piece, to_box):
+        board.move_piece(self.pieces, piece, to_box)
         self._agents.reverse()
 
     def render(self, surface, box_width, black, white):

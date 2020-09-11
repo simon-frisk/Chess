@@ -13,15 +13,15 @@ WHITE = (220, 160, 110)
 
 pygame.init()
 
-screen_width = board.BOX_WIDTH * 8
+screen_width = BOX_WIDTH * 8
 display_surface = pygame.display.set_mode(
-    (board.BOX_WIDTH * 8, board.BOX_WIDTH * 8))
+    (BOX_WIDTH * 8, BOX_WIDTH * 8))
 pygame.display.set_caption('Chess')
 
 clock = pygame.time.Clock()
 
 game = game.Game([User(PieceColor.WHITE),
-                  StupidBot(PieceColor.BLACK)], board.init_pieces())
+                  StupidBot(PieceColor.BLACK)], board.init_pieces(BOX_WIDTH))
 
 while True:
     click = None
@@ -31,8 +31,8 @@ while True:
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if type(game.turn_agent) == User:
-                row = math.floor(event.pos[1] / board.BOX_WIDTH)
-                column = math.floor(event.pos[0] / board.BOX_WIDTH)
+                row = math.floor(event.pos[1] / BOX_WIDTH)
+                column = math.floor(event.pos[0] / BOX_WIDTH)
                 click = {'row': row, 'column': column}
 
     game.turn_agent.handle_turn(game.pieces, game.turn, click)

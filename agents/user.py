@@ -9,24 +9,23 @@ class User(Agent):
         if not click:
             return
 
-        clicked_possible_move_box = None
-        for possible_move_box in self.selected_box_moves:
-            if(possible_move_box['row'] == click['row'] and possible_move_box['column'] == click['column']):
-                clicked_possible_move_box = possible_move_box
+        is_possible_box = None
+        for box in self.possible_from_selected:
+            if box == click:
+                is_possible_box = True
                 break
 
-        if clicked_possible_move_box:
-            piece = board.get_piece(pieces,
-                                    self.selected_box['row'], self.selected_box['column'])
-            self.selected_box = None
-            self.selected_box_moves = []
-            turn(piece, click['row'], click['column'])
+        if is_possible_box:
+            piece = board.get_piece(pieces, self.selected)
+            self.selected = None
+            self.possible_from_selected = []
+            turn(piece, click)
 
         else:
-            piece = board.get_piece(pieces, click['row'], click['column'])
-            if piece and piece.piece_color == self.color:
-                self.selected_box = click
-                self.selected_box_moves = piece.possible_moves(pieces)
+            piece = board.get_piece(pieces, click)
+            if piece and piece.color == self.color:
+                self.selected = click
+                self.possible_from_selected = piece.possible_moves(pieces)
             else:
-                self.selected_box = None
-                self.selected_box_moves = []
+                self.selected = None
+                self.possible_from_selected = []
