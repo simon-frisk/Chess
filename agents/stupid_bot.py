@@ -3,12 +3,10 @@ from agents.agent import Agent
 
 
 class StupidBot(Agent):
-    def handle_turn(self, switch_turn):
+    def handle_turn(self, pieces, turn, click):
         own_pieces = filter(lambda piece: piece.piece_color ==
-                            self.color, self.board.pieces)
+                            self.color, pieces)
         possible_moves = [{'piece': piece, 'move': move}
-                          for piece in own_pieces for move in piece.possible_moves()]
+                          for piece in own_pieces for move in piece.possible_moves(pieces)]
         move = random.choice(possible_moves)
-        self.board.move_piece(
-            move['piece'], move['move']['row'], move['move']['column'])
-        switch_turn()
+        turn(move['piece'], move['move']['row'], move['move']['column'])

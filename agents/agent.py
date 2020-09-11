@@ -4,8 +4,7 @@ MARKED_BOX_LINE_WIDTH = 5
 
 
 class Agent:
-    def __init__(self, board, color):
-        self.board = board
+    def __init__(self, color):
         self.color = color
         self.selected_box = None
         self.selected_box_moves = []

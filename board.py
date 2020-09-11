@@ -9,89 +9,55 @@ from pieces.king import King
 from pieces.piece import PieceType, PieceColor
 
 
-class Board:
-    BOX_COUNT = 8
-    BOX_WIDTH = 70
-    BLACK = (80, 40, 20)
-    WHITE = (220, 160, 110)
+def init_pieces():
+    return [
+        Rook(0, 0, PieceColor.BLACK),
+        Knight(0, 1, PieceColor.BLACK),
+        Bishop(0, 2, PieceColor.BLACK),
+        Queen(0, 3, PieceColor.BLACK),
+        King(0, 4, PieceColor.BLACK),
+        Bishop(0, 5, PieceColor.BLACK),
+        Knight(0, 6, PieceColor.BLACK),
+        Rook(0, 7, PieceColor.BLACK),
+        Pawn(1, 0, PieceColor.BLACK),
+        Pawn(1, 1, PieceColor.BLACK),
+        Pawn(1, 2, PieceColor.BLACK),
+        Pawn(1, 3, PieceColor.BLACK),
+        Pawn(1, 4, PieceColor.BLACK),
+        Pawn(1, 5, PieceColor.BLACK),
+        Pawn(1, 6, PieceColor.BLACK),
+        Pawn(1, 7, PieceColor.BLACK),
+        Pawn(6, 0, PieceColor.WHITE),
+        Pawn(6, 1, PieceColor.WHITE),
+        Pawn(6, 2, PieceColor.WHITE),
+        Pawn(6, 3, PieceColor.WHITE),
+        Pawn(6, 4, PieceColor.WHITE),
+        Pawn(6, 5, PieceColor.WHITE),
+        Pawn(6, 6, PieceColor.WHITE),
+        Pawn(6, 7, PieceColor.WHITE),
+        Rook(7, 0, PieceColor.WHITE),
+        Knight(7, 1, PieceColor.WHITE),
+        Bishop(7, 2, PieceColor.WHITE),
+        Queen(7, 3, PieceColor.WHITE),
+        King(7, 4, PieceColor.WHITE),
+        Bishop(7, 5, PieceColor.WHITE),
+        Knight(7, 6, PieceColor.WHITE),
+        Rook(7, 7, PieceColor.WHITE),
+    ]
 
-    def __init__(self):
-        self.pieces = [
-            Rook(self, 0, 0, PieceColor.BLACK),
-            Knight(self, 0, 1, PieceColor.BLACK),
-            Bishop(self, 0, 2, PieceColor.BLACK),
-            Queen(self, 0, 3, PieceColor.BLACK),
-            King(self, 0, 4, PieceColor.BLACK),
-            Bishop(self, 0, 5, PieceColor.BLACK),
-            Knight(self, 0, 6, PieceColor.BLACK),
-            Rook(self, 0, 7, PieceColor.BLACK),
-            Pawn(self, 1, 0, PieceColor.BLACK),
-            Pawn(self, 1, 1, PieceColor.BLACK),
-            Pawn(self, 1, 2, PieceColor.BLACK),
-            Pawn(self, 1, 3, PieceColor.BLACK),
-            Pawn(self, 1, 4, PieceColor.BLACK),
-            Pawn(self, 1, 5, PieceColor.BLACK),
-            Pawn(self, 1, 6, PieceColor.BLACK),
-            Pawn(self, 1, 7, PieceColor.BLACK),
-            Pawn(self, 6, 0, PieceColor.WHITE),
-            Pawn(self, 6, 1, PieceColor.WHITE),
-            Pawn(self, 6, 2, PieceColor.WHITE),
-            Pawn(self, 6, 3, PieceColor.WHITE),
-            Pawn(self, 6, 4, PieceColor.WHITE),
-            Pawn(self, 6, 5, PieceColor.WHITE),
-            Pawn(self, 6, 6, PieceColor.WHITE),
-            Pawn(self, 6, 7, PieceColor.WHITE),
-            Rook(self, 7, 0, PieceColor.WHITE),
-            Knight(self, 7, 1, PieceColor.WHITE),
-            Bishop(self, 7, 2, PieceColor.WHITE),
-            Queen(self, 7, 3, PieceColor.WHITE),
-            King(self, 7, 4, PieceColor.WHITE),
-            Bishop(self, 7, 5, PieceColor.WHITE),
-            Knight(self, 7, 6, PieceColor.WHITE),
-            Rook(self, 7, 7, PieceColor.WHITE),
-        ]
 
-    def render(self, surface, current_turn_color):
-        for row in range(0, self.BOX_COUNT):
-            for column in range(0, self.BOX_COUNT):
-                pygame.draw.rect(surface, self.get_box_color(
-                    row, column), self.get_box_dimensions(row, column))
+def move_piece(pieces, piece, row, column):
+    old_piece = get_piece(pieces, row, column)
+    if old_piece:
+        pieces.remove(old_piece)
 
-        for piece in self.pieces:
-            piece.render(surface)
+    piece.row = row
+    piece.column = column
 
-        turn_line_y = self.BOX_WIDTH * \
-            self.BOX_COUNT if current_turn_color == PieceColor.WHITE else 0
-        pygame.draw.line(surface, (0, 255, 0), (0, turn_line_y),
-                         (self.BOX_COUNT * self.BOX_WIDTH, turn_line_y), 5)
+    return pieces
 
-    def move_piece(self, piece, row, column):
-        old_piece = self.get_piece(row, column)
-        if old_piece:
-            self.pieces.remove(old_piece)
 
-        piece.row = row
-        piece.column = column
-
-    def get_piece(self, row, column):
-        for piece in self.pieces:
-            if(piece.row == row and piece.column == column):
-                return piece
-
-    def get_box_color(self, row, column):
-        if(row % 2):
-            if(column % 2):
-                return self.WHITE
-            else:
-                return self.BLACK
-        else:
-            if(column % 2):
-                return self.BLACK
-            else:
-                return self.WHITE
-
-    def get_box_dimensions(self, row, column):
-        index = row * self.BOX_COUNT + column
-        x = index % self.BOX_COUNT * self.BOX_WIDTH
-        y = math.floor(index / self.BOX_COUNT) * self.BOX_WIDTH
-        return (x, y, self.BOX_WIDTH, self.BOX_WIDTH)
+def get_piece(pieces, row, column):
+    for piece in pieces:
+        if(piece.row == row and piece.column == column):
+            return piece

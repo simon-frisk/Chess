@@ -1,29 +1,32 @@
 import pygame
+import board
 from agents.agent import Agent
 
 
 class User(Agent):
 
-    def handle_box_click(self, row, column, switch_turn):
+    def handle_turn(self, pieces, turn, click):
+        if not click:
+            return
+
         clicked_possible_move_box = None
         for possible_move_box in self.selected_box_moves:
-            if(possible_move_box['row'] == row and possible_move_box['column'] == column):
+            if(possible_move_box['row'] == click['row'] and possible_move_box['column'] == click['column']):
                 clicked_possible_move_box = possible_move_box
                 break
 
         if clicked_possible_move_box:
-            piece = self.board.get_piece(
-                self.selected_box['row'], self.selected_box['column'])
-            self.board.move_piece(piece, row, column)
+            piece = board.get_piece(pieces,
+                                    self.selected_box['row'], self.selected_box['column'])
             self.selected_box = None
             self.selected_box_moves = []
-            switch_turn()
+            turn(piece, click['row'], click['column'])
 
         else:
-            piece = self.board.get_piece(row, column)
+            piece = board.get_piece(pieces, click['row'], click['column'])
             if piece and piece.piece_color == self.color:
-                self.selected_box = {'row': row, 'column': column}
-                self.selected_box_moves = piece.possible_moves()
+                self.selected_box = click
+                self.selected_box_moves = piece.possible_moves(pieces)
             else:
                 self.selected_box = None
                 self.selected_box_moves = []
