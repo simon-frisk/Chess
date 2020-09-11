@@ -7,6 +7,7 @@ class Game:
     def __init__(self, agents, pieces):
         self._agents = agents
         self.pieces = pieces
+        self.turn_agent.find_possible_moves(self.pieces)
 
     @property
     def turn_agent(self):
@@ -15,6 +16,7 @@ class Game:
     def turn(self, piece, to_box):
         board.move_piece(self.pieces, piece, to_box)
         self._agents.reverse()
+        self.turn_agent.find_possible_moves(self.pieces)
 
     def render(self, surface, box_width, black, white):
         for row in range(0, 8):

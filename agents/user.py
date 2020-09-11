@@ -4,7 +4,6 @@ from agents.agent import Agent
 
 
 class User(Agent):
-
     def handle_turn(self, pieces, turn, click):
         if not click:
             return
@@ -25,7 +24,8 @@ class User(Agent):
             piece = board.get_piece(pieces, click)
             if piece and piece.color == self.color:
                 self.selected = click
-                self.possible_from_selected = piece.possible_moves(pieces)
+                self.possible_from_selected = [move['move'] for move in filter(
+                    lambda move: move['piece'] == piece, self.possible_moves)]
             else:
                 self.selected = None
                 self.possible_from_selected = []
