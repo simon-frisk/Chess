@@ -27,6 +27,7 @@ class Piece:
         self.color = color
         self.piece_type = piece_type
         self.width = width
+        self.has_moved = False
 
     def step_possible(self, pieces, column_step_multiplier, row_step_multiplier, step_limit=None, allow_capture=True, allow_non_capture=True):
         possible_boxes = []

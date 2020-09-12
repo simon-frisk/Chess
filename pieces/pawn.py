@@ -14,8 +14,7 @@ class Pawn(Piece):
                                              1, 1 * direction, 1, True, False)
         possible_moves += self.step_possible(pieces, -1,
                                              1 * direction, 1, True, False)
-        if direction == 1 and self.row == 1:
-            possible_moves += self.step_possible(pieces, 0, 2, 1, False)
-        if direction == -1 and self.row == 6:
-            possible_moves += self.step_possible(pieces, 0, -2, 1, False)
+        if not self.has_moved:
+            possible_moves += self.step_possible(pieces,
+                                                 0, 2 * direction, 1, False)
         return possible_moves

@@ -53,6 +53,7 @@ def move_piece(pieces, piece, box):
 
     piece.row = box['row']
     piece.column = box['column']
+    piece.has_moved = True
 
     return pieces
 
