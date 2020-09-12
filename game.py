@@ -28,6 +28,10 @@ class Game:
         possible_moves = self.turn_agent.find_possible_moves(self.pieces)
         if len(possible_moves) == 0:
             self.chess_mate = True
+        if board.is_chess(self.pieces, self.turn_agent.color):
+            self.chess = True
+        else:
+            self.chess = False
 
     def render(self, surface, box_width, black, white, font):
         for row in range(0, 8):
@@ -48,6 +52,9 @@ class Game:
 
         if self.chess_mate:
             text = font.render('Chessmate', False, (0, 200, 0))
+            surface.blit(text, (100, 100))
+        if self.chess:
+            text = font.render('Chess', False, (0, 200, 0))
             surface.blit(text, (100, 100))
 
     def get_box_color(self, row, column, black, white):

@@ -14,16 +14,15 @@ BLACK = (80, 40, 20)
 WHITE = (220, 160, 110)
 font = pygame.font.SysFont(None, 70)
 
-
 screen_width = BOX_WIDTH * 8
-display_surface = pygame.display.set_mode(
-    (BOX_WIDTH * 8, BOX_WIDTH * 8))
+display_surface = pygame.display.set_mode((screen_width, screen_width))
 pygame.display.set_caption('Chess')
 
 clock = pygame.time.Clock()
 
-game = game.Game([User(PieceColor.WHITE),
-                  StupidBot(PieceColor.BLACK)], board.init_pieces(BOX_WIDTH), BOX_WIDTH)
+player1 = User(PieceColor.WHITE)
+player2 = StupidBot(PieceColor.BLACK)
+game = game.Game([player1, player2], board.init_pieces(BOX_WIDTH), BOX_WIDTH)
 
 while True:
     click = None
