@@ -12,7 +12,7 @@ pygame.init()
 BOX_WIDTH = 70
 BLACK = (80, 40, 20)
 WHITE = (220, 160, 110)
-font = pygame.font.SysFont(None, 70)
+font = pygame.font.SysFont(None, 90)
 
 screen_width = BOX_WIDTH * 8
 display_surface = pygame.display.set_mode((screen_width, screen_width))

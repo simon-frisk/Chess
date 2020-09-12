@@ -51,11 +51,15 @@ class Game:
         self.turn_agent.render(surface, box_width)
 
         if self.chess_mate:
-            text = font.render('Chessmate', False, (0, 200, 0))
-            surface.blit(text, (100, 100))
-        if self.chess:
-            text = font.render('Chess', False, (0, 200, 0))
-            surface.blit(text, (100, 100))
+            text = font.render('Chessmate', False, (170, 170, 170))
+            x = box_width * 4 - text.get_rect().width / 2
+            y = box_width * 4 - text.get_rect().height / 2
+            surface.blit(text, (x, y))
+        elif self.chess:
+            text = font.render('Chess', False, (170, 170, 170))
+            x = box_width * 4 - text.get_rect().width / 2
+            y = box_width * 4 - text.get_rect().height / 2
+            surface.blit(text, (x, y))
 
     def get_box_color(self, row, column, black, white):
         if(row % 2):
