@@ -27,14 +27,6 @@ class Piece:
         self.color = color
         self.piece_type = piece_type
         self.width = width
-        image = pygame.image.load(
-            f'./pieces/images/{color.value}_{piece_type.value}.png')
-        image = pygame.transform.scale(image, (width, width))
-        self.image = image
-
-    def render(self, surface):
-        surface.blit(self.image, (self.column * self.width,
-                                  self.row * self.width, self.width, self.width))
 
     def step_possible(self, pieces, column_step_multiplier, row_step_multiplier, step_limit=None, allow_capture=True, allow_non_capture=True):
         possible_boxes = []

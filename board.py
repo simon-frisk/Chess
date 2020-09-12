@@ -61,3 +61,19 @@ def get_piece(pieces, box):
     for piece in pieces:
         if(piece.row == box['row'] and piece.column == box['column']):
             return piece
+
+
+def is_chess(pieces, color):
+    for piece in pieces:
+        if piece.color == color and piece.piece_type == PieceType.KING:
+            king = piece
+            break
+    enemy_pieces = [piece for piece in pieces if piece.color != color]
+    enemy_moves = [
+        move for piece in enemy_pieces for move in piece.possible_moves(pieces)]
+
+    def threatens_king(move):
+        return move['row'] == king.row and move['column'] == king.column
+
+    is_chess = any([threatens_king(move) for move in enemy_moves])
+    return is_chess

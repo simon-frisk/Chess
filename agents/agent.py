@@ -1,5 +1,6 @@
 import pygame
 import board
+import copy
 from pieces.piece import PieceType
 
 SELECTED_OUTLINE_WIDTH = 5
@@ -21,11 +22,20 @@ class Agent:
                                                     self.selected['row'] * BOX_WIDTH, BOX_WIDTH, BOX_WIDTH), SELECTED_OUTLINE_WIDTH)
 
     def find_possible_moves(self, pieces):
-        own_pieces = filter(lambda piece: piece.color ==
-                            self.color, pieces)
+        own_pieces = [piece for piece in pieces if piece.color == self.color]
         possible_moves = [{'piece': piece, 'move': move}
                           for piece in own_pieces for move in piece.possible_moves(pieces)]
 
-        self.possible_moves = possible_moves
-        if len(self.possible_moves) == 0:
-            print('chessmate')
+        legal_moves = []
+        for move in possible_moves:
+            pieces_copy = [copy.deepcopy(piece) for piece in pieces]
+            move_piece = board.get_piece(pieces_copy, {
+                'row': move['piece'].row,
+                'column': move['piece'].column
+            })
+            board.move_piece(pieces_copy, move_piece, move['move'])
+            if not board.is_chess(pieces_copy, self.color):
+                legal_moves.append(move)
+
+        self.possible_moves = legal_moves
+        return self.possible_moves
