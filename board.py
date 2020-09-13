@@ -72,11 +72,17 @@ def get_piece(pieces, box):
 
 
 def is_chess(pieces, color):
+    king = None
+    enemy_king = None
     for piece in pieces:
-        if piece.color == color and piece.piece_type == PieceType.KING:
-            king = piece
-            break
+        if piece.piece_type == PieceType.KING:
+            if piece.color == color:
+                king = piece
+            elif piece.color != color:
+                enemy_king = piece
     enemy_pieces = [piece for piece in pieces if piece.color != color]
+    if not king.has_moved and not enemy_king.has_moved:
+        enemy_pieces.remove(enemy_king)
     enemy_moves = [
         move for piece in enemy_pieces for move in piece.possible_moves(pieces)]
 
@@ -102,8 +108,10 @@ def pieces_after_move(pieces, move):
         'row': move['extra']['piece'].row,
         'column': move['extra']['piece'].column
     }) if move['extra'] else None
-    move_piece(pieces_copy, {
-        'piece': piece, 'box': move['box'], 'capture': capture_piece, 'extra': {'piece': extra_piece, 'capture': None, 'extra': None, 'box': move['extra']['box']} if move['extra'] else None})
+    extra_move = get_move(
+        extra_piece, move['extra']['box'], None, None) if extra_piece else None
+    move_copy = get_move(piece, move['box'], capture_piece, extra_move)
+    move_piece(pieces_copy, move_copy)
     return pieces_copy
 
 
