@@ -1,5 +1,6 @@
 import pygame
 import board
+import time
 import copy
 from pieces.piece import PieceColor, PieceType
 
@@ -11,28 +12,45 @@ class Game:
         self.turn_agent.find_possible_moves(self.pieces)
         pieces = copy.copy(pieces)
         self.load_images(box_width)
-        self.chess_mate = False
-        self.chess = False
+        self.game_end = False
+        self.event = ''
+        self.event_start_time = None
+        self.moves_since_capture = 0
 
     @property
     def turn_agent(self):
         return self._agents[0]
 
     def handle_turn(self, pieces, click):
-        if not self.chess_mate:
+        if not self.game_end:
             self.turn_agent.handle_turn(
                 pieces, self.turn, click, self._agents[1])
 
     def turn(self, move):
+        self.event = ''
         board.move_piece(self.pieces, move)
+        self.moves_since_capture += 1
+        if move['capture']:
+            self.moves_since_capture = 0
         self._agents.reverse()
+        if self.moves_since_capture >= 50:
+            self.event_start_time = time.time()
+            self.set_event('Draw')
         possible_moves = self.turn_agent.find_possible_moves(self.pieces)
+        is_chess = board.is_chess(self.pieces, self.turn_agent.color)
+        if is_chess:
+            self.set_event('Chess')
         if len(possible_moves) == 0:
-            self.chess_mate = True
-        if board.is_chess(self.pieces, self.turn_agent.color):
-            self.chess = True
-        else:
-            self.chess = False
+            if is_chess:
+                self.set_event('Checkmate')
+            else:
+                self.set_event('Stalemate')
+
+    def set_event(self, event):
+        self.event_start_time = time.time()
+        self.event = event
+        if event == 'Checkmate' or event == 'Stalemate' or event == 'Draw':
+            self.game_end = True
 
     def render(self, surface, box_width, black, white, font):
         for row in range(0, 8):
@@ -51,13 +69,8 @@ class Game:
 
         self.turn_agent.render(surface, box_width)
 
-        if self.chess_mate:
-            text = font.render('Chessmate', False, (170, 170, 170))
-            x = box_width * 4 - text.get_rect().width / 2
-            y = box_width * 4 - text.get_rect().height / 2
-            surface.blit(text, (x, y))
-        elif self.chess:
-            text = font.render('Chess', False, (170, 170, 170))
+        if self.event and time.time() - self.event_start_time < 10:
+            text = font.render(self.event, False, (170, 170, 170))
             x = box_width * 4 - text.get_rect().width / 2
             y = box_width * 4 - text.get_rect().height / 2
             surface.blit(text, (x, y))
