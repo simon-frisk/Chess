@@ -84,17 +84,18 @@ def is_chess(pieces, color):
 def pieces_after_move(pieces, move):
     ''' Calculates how the pieces would be if a given move was conducted'''
     pieces_copy = [copy.deepcopy(piece) for piece in pieces]
-    move_piece = board.get_piece(pieces_copy, {
+    piece = get_piece(pieces_copy, {
         'row': move['piece'].row,
         'column': move['piece'].column
     })
-    capture_piece = board.get_piece(pieces_copy, {
+    capture_piece = get_piece(pieces_copy, {
         'row': move['capture'].row,
         'column': move['capture'].column
     }) if move['capture'] else None
-    extra_piece = board.get_piece(pieces_copy, {
+    extra_piece = get_piece(pieces_copy, {
         'row': move['extra']['piece'].row,
         'column': move['extra']['piece'].column
     }) if move['extra'] else None
     move_piece(pieces_copy, {
-        'piece': move_piece, 'box': move['box'], 'capture': capture_piece, 'extra': {'piece': extra_piece, 'capture': None, 'extra': None, 'box': move['extra']['box']} if move['extra'] else None})
+        'piece': piece, 'box': move['box'], 'capture': capture_piece, 'extra': {'piece': extra_piece, 'capture': None, 'extra': None, 'box': move['extra']['box']} if move['extra'] else None})
+    return pieces_copy
