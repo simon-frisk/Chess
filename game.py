@@ -20,7 +20,8 @@ class Game:
 
     def handle_turn(self, pieces, click):
         if not self.chess_mate:
-            self.turn_agent.handle_turn(pieces, self.turn, click)
+            self.turn_agent.handle_turn(
+                pieces, self.turn, click, self._agents[1])
 
     def turn(self, move):
         board.move_piece(self.pieces, move)

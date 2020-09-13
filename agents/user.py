@@ -4,7 +4,7 @@ from agents.agent import Agent
 
 
 class User(Agent):
-    def handle_turn(self, pieces, turn, click):
+    def handle_turn(self, pieces, turn, click, enemy):
         if not click:
             return
 
