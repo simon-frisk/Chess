@@ -5,6 +5,7 @@ import board
 import game
 from agents.user import User
 from agents.stupid_bot import StupidBot
+from agents.smart_bot import SmartBot
 from pieces.piece import PieceColor
 
 pygame.init()
@@ -20,7 +21,7 @@ pygame.display.set_caption('Chess')
 
 clock = pygame.time.Clock()
 
-player1 = User(PieceColor.WHITE)
+player1 = SmartBot(PieceColor.WHITE)
 player2 = StupidBot(PieceColor.BLACK)
 game = game.Game([player1, player2], board.init_pieces(BOX_WIDTH), BOX_WIDTH)
 
