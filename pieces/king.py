@@ -26,11 +26,16 @@ class King(Piece):
         for rook in castle_rooks:
             lowest_column = min(rook.column + 1, self.column + 1)
             highest_column = max(rook.column, self.column)
+            possible = True
             for column in range(lowest_column, highest_column):
                 # TODO: King cannot be checked and cannot castle through attacked box. Rook can though
                 piece = board.get_piece(pieces, {'row': row, 'column': column})
                 if piece:
-                    continue
-                # add move
+                    possible = False
+            if possible:
+                direction = 1 if self.column < rook.column else -1
+                move = {'piece': self, 'box': {'row': row, 'column': self.column + direction * 2}, 'capture': None, 'extra': {
+                    'piece': rook, 'box': {'row': row, 'column': self.column + direction * 2 + direction * -1}, 'capture': None, 'extra': None}}
+                possible_moves.append(move)
 
         return possible_moves

@@ -37,8 +37,12 @@ class Agent:
                 'row': move['capture'].row,
                 'column': move['capture'].column
             }) if move['capture'] else None
+            extra_piece = board.get_piece(pieces_copy, {
+                'row': move['extra']['piece'].row,
+                'column': move['extra']['piece'].column
+            }) if move['extra'] else None
             board.move_piece(pieces_copy, {
-                             'piece': move_piece, 'box': move['box'], 'capture': capture_piece})
+                             'piece': move_piece, 'box': move['box'], 'capture': capture_piece, 'extra': {'piece': extra_piece, 'capture': None, 'extra': None, 'box': move['extra']['box']} if move['extra'] else None})
             if not board.is_chess(pieces_copy, self.color):
                 legal_moves.append(move)
 

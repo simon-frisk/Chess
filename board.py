@@ -49,6 +49,8 @@ def init_pieces(width):
 def move_piece(pieces, move):
     if move['capture']:
         pieces.remove(move['capture'])
+    if move['extra']:
+        move_piece(pieces, move['extra'])
     move['piece'].row = move['box']['row']
     move['piece'].column = move['box']['column']
     move['piece'].has_moved = True
