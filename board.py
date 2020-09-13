@@ -105,3 +105,16 @@ def pieces_after_move(pieces, move):
     move_piece(pieces_copy, {
         'piece': piece, 'box': move['box'], 'capture': capture_piece, 'extra': {'piece': extra_piece, 'capture': None, 'extra': None, 'box': move['extra']['box']} if move['extra'] else None})
     return pieces_copy
+
+
+def get_box(row, column):
+    return {'row': row, 'column': column}
+
+
+def get_move(piece, box, capture, extra):
+    return {
+        'piece': piece,
+        'box': box,
+        'capture': capture,
+        'extra': extra
+    }

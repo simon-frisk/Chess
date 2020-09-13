@@ -35,10 +35,9 @@ class Piece:
             try_steps = len(moves) + 1
             column = self.column + try_steps * column_step_multiplier
             row = self.row + try_steps * row_step_multiplier
-            box = {'row': row, 'column': column}
-            piece_there = board.get_piece(pieces, box)
-            move = {'piece': self, 'box': box,
-                    'capture': piece_there, 'extra': None}
+            box = board.get_box(row, column)
+            capture = board.get_piece(pieces, box)
+            move = board.get_move(self, box, capture, None)
 
             if not (0 <= row <= 7) or not (0 <= column <= 7):
                 break

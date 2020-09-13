@@ -36,7 +36,7 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             row = math.floor(event.pos[1] / BOX_WIDTH)
             column = math.floor(event.pos[0] / BOX_WIDTH)
-            click = {'row': row, 'column': column}
+            click = board.get_box(row, column)
 
     game.handle_turn(game.pieces, click)
     game.render(display_surface, BOX_WIDTH, colors.BLACK, colors.WHITE, font)

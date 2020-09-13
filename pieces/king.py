@@ -28,14 +28,16 @@ class King(Piece):
             highest_column = max(rook.column, self.column)
             possible = True
             for column in range(lowest_column, highest_column):
-                # TODO: King cannot be checked and cannot castle through attacked box. Rook can though
-                piece = board.get_piece(pieces, {'row': row, 'column': column})
+                piece = board.get_piece(pieces, board.get_box(row, column))
                 if piece:
                     possible = False
+                # if board.is_chess(board.pieces_after_move(pieces, ))
             if possible:
                 direction = 1 if self.column < rook.column else -1
-                move = {'piece': self, 'box': {'row': row, 'column': self.column + direction * 2}, 'capture': None, 'extra': {
-                    'piece': rook, 'box': {'row': row, 'column': self.column + direction * 2 + direction * -1}, 'capture': None, 'extra': None}}
+                extra_move = board.get_move(rook, board.get_box(
+                    row, self.column + direction * 2 + direction * -1), None, None)
+                move = board.get_move(self, board.get_box(
+                    row, self.column + direction * 2), None, extra_move)
                 possible_moves.append(move)
 
         return possible_moves
