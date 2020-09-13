@@ -7,14 +7,9 @@ class Pawn(Piece):
 
     def possible_moves(self, pieces):
         direction = -1 if self.color == PieceColor.WHITE else 1
-        possible_moves = []
-        possible_moves += self.step_possible(pieces,
-                                             0, 1 * direction, 1, False)
-        possible_moves += self.step_possible(pieces,
-                                             1, 1 * direction, 1, True, False)
-        possible_moves += self.step_possible(pieces, -1,
-                                             1 * direction, 1, True, False)
-        if not self.has_moved:
-            possible_moves += self.step_possible(pieces,
-                                                 0, 2 * direction, 1, False)
-        return possible_moves
+        steps = 2 if not self.has_moved else 1
+        moves = []
+        moves += self.step_possible(pieces, 0, 1 * direction, steps, False)
+        moves += self.step_possible(pieces, 1, 1 * direction, 1, True, False)
+        moves += self.step_possible(pieces, -1, 1 * direction, 1, True, False)
+        return moves
