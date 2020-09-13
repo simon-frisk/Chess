@@ -57,7 +57,6 @@ def move_piece(pieces, move):
             piece.can_be_en_passented = False
     if move['piece'].piece_type == PieceType.PAWN:
         if abs(move['box']['row'] - move['piece'].row) == 2:
-            print('can be en passent')
             move['piece'].can_be_en_passented = True
     move['piece'].has_moved = True
     move['piece'].row = move['box']['row']

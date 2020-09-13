@@ -11,7 +11,6 @@ class Game:
         self._agents = agents
         self.pieces = pieces
         self.turn_agent.find_possible_moves(self.pieces)
-        pieces = copy.copy(pieces)
         self.load_images(box_width)
         self.game_end = False
         self.event = ''
@@ -33,10 +32,10 @@ class Game:
         self.moves_since_capture += 1
         if move['capture']:
             self.moves_since_capture = 0
-        self._agents.reverse()
         if self.moves_since_capture >= 50:
             self.event_start_time = time.time()
             self.set_event('Draw')
+        self._agents.reverse()
         possible_moves = self.turn_agent.find_possible_moves(self.pieces)
         is_chess = board.is_chess(self.pieces, self.turn_agent.color)
         if is_chess:
@@ -66,7 +65,7 @@ class Game:
 
         turn_line_y = box_width * 8 if self.turn_agent.color == PieceColor.WHITE else 0
         pygame.draw.line(surface, colors.LIGHT_GREEN, (0, turn_line_y),
-                         (8 * box_width, turn_line_y), 5)
+                         (8 * box_width, turn_line_y), 12)
 
         self.turn_agent.render(surface, box_width)
 
