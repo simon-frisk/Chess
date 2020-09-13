@@ -3,6 +3,7 @@ import math
 import pygame
 import board
 import game
+import colors
 from agents.user import User
 from agents.stupid_bot import StupidBot
 from agents.smart_bot import SmartBot
@@ -11,8 +12,7 @@ from pieces.piece import PieceColor
 pygame.init()
 
 BOX_WIDTH = 70
-BLACK = (80, 40, 20)
-WHITE = (220, 160, 110)
+FPS = 40
 font = pygame.font.SysFont(None, 90)
 
 screen_width = BOX_WIDTH * 8
@@ -21,8 +21,8 @@ pygame.display.set_caption('Chess')
 
 clock = pygame.time.Clock()
 
-player1 = SmartBot(PieceColor.WHITE)
-player2 = StupidBot(PieceColor.BLACK)
+player1 = User(PieceColor.WHITE)
+player2 = SmartBot(PieceColor.BLACK)
 game = game.Game([player1, player2], board.init_pieces(BOX_WIDTH), BOX_WIDTH)
 
 while True:
@@ -38,8 +38,8 @@ while True:
                 click = {'row': row, 'column': column}
 
     game.handle_turn(game.pieces, click)
-    game.render(display_surface, BOX_WIDTH, BLACK, WHITE, font)
+    game.render(display_surface, BOX_WIDTH, colors.BLACK, colors.WHITE, font)
 
     pygame.display.update()
 
-    clock.tick(30)
+    clock.tick(FPS)

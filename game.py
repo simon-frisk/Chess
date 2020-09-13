@@ -2,6 +2,7 @@ import pygame
 import board
 import time
 import copy
+import colors
 from pieces.piece import PieceColor, PieceType
 
 
@@ -64,13 +65,13 @@ class Game:
                                  piece.row * box_width, box_width, box_width))
 
         turn_line_y = box_width * 8 if self.turn_agent.color == PieceColor.WHITE else 0
-        pygame.draw.line(surface, (0, 255, 0), (0, turn_line_y),
+        pygame.draw.line(surface, colors.LIGHT_GREEN, (0, turn_line_y),
                          (8 * box_width, turn_line_y), 5)
 
         self.turn_agent.render(surface, box_width)
 
         if self.event and time.time() - self.event_start_time < 10:
-            text = font.render(self.event, False, (170, 170, 170))
+            text = font.render(self.event, False, colors.LIGHT_GREEN)
             x = box_width * 4 - text.get_rect().width / 2
             y = box_width * 4 - text.get_rect().height / 2
             surface.blit(text, (x, y))
