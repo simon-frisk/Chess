@@ -8,23 +8,22 @@ class User(Agent):
         if not click:
             return
 
-        is_possible_box = None
-        for box in self.possible_from_selected:
-            if box == click:
-                is_possible_box = True
+        selected_move = None
+        for move in self.possible_from_selected:
+            if move['box'] == click:
+                selected_move = move
                 break
 
-        if is_possible_box:
-            piece = board.get_piece(pieces, self.selected)
+        if selected_move:
             self.selected = None
             self.possible_from_selected = []
-            turn(piece, click)
+            turn(selected_move)
 
         else:
             piece = board.get_piece(pieces, click)
             if piece and piece.color == self.color:
                 self.selected = click
-                self.possible_from_selected = [move['move'] for move in filter(
+                self.possible_from_selected = [move for move in filter(
                     lambda move: move['piece'] == piece, self.possible_moves)]
             else:
                 self.selected = None

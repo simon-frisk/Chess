@@ -46,14 +46,12 @@ def init_pieces(width):
     ]
 
 
-def move_piece(pieces, piece, box):
-    old_piece = get_piece(pieces, box)
-    if old_piece:
-        pieces.remove(old_piece)
-
-    piece.row = box['row']
-    piece.column = box['column']
-    piece.has_moved = True
+def move_piece(pieces, move):
+    if move['capture']:
+        pieces.remove(move['capture'])
+    move['piece'].row = move['box']['row']
+    move['piece'].column = move['box']['column']
+    move['piece'].has_moved = True
 
     return pieces
 
@@ -74,7 +72,7 @@ def is_chess(pieces, color):
         move for piece in enemy_pieces for move in piece.possible_moves(pieces)]
 
     def threatens_king(move):
-        return move['row'] == king.row and move['column'] == king.column
+        return move['capture'] == king
 
     is_chess = any([threatens_king(move) for move in enemy_moves])
     return is_chess

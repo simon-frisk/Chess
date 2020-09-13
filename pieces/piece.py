@@ -30,25 +30,27 @@ class Piece:
         self.has_moved = False
 
     def step_possible(self, pieces, column_step_multiplier, row_step_multiplier, step_limit=None, allow_capture=True, allow_non_capture=True):
-        possible_boxes = []
+        moves = []
         while True:
-            try_steps = len(possible_boxes) + 1
+            try_steps = len(moves) + 1
             column = self.column + try_steps * column_step_multiplier
             row = self.row + try_steps * row_step_multiplier
             box = {'row': row, 'column': column}
+            piece_there = board.get_piece(pieces, box)
+            move = {'piece': self, 'box': box, 'capture': piece_there}
 
             if not (0 <= row <= 7) or not (0 <= column <= 7):
                 break
 
             piece = board.get_piece(pieces, box)
             if piece and piece.color != self.color and allow_capture:
-                possible_boxes.append(box)
+                moves.append(move)
                 break
             if not piece and allow_non_capture:
-                possible_boxes.append(box)
-                if step_limit and len(possible_boxes) >= step_limit:
+                moves.append(move)
+                if step_limit and len(moves) >= step_limit:
                     break
             else:
                 break
 
-        return possible_boxes
+        return moves

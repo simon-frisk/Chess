@@ -22,8 +22,8 @@ class Game:
         if not self.chess_mate:
             self.turn_agent.handle_turn(pieces, self.turn, click)
 
-    def turn(self, piece, to_box):
-        board.move_piece(self.pieces, piece, to_box)
+    def turn(self, move):
+        board.move_piece(self.pieces, move)
         self._agents.reverse()
         possible_moves = self.turn_agent.find_possible_moves(self.pieces)
         if len(possible_moves) == 0:
