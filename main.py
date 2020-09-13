@@ -16,8 +16,10 @@ FPS = 40
 font = pygame.font.SysFont(None, 90)
 
 screen_width = BOX_WIDTH * 8
+screen_icon = pygame.image.load('pieces/images/W_KING.png')
 display_surface = pygame.display.set_mode((screen_width, screen_width))
 pygame.display.set_caption('Chess')
+pygame.display.set_icon(screen_icon)
 
 clock = pygame.time.Clock()
 
