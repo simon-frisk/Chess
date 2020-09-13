@@ -52,9 +52,16 @@ def move_piece(pieces, move):
         pieces.remove(move['capture'])
     if move['extra']:
         move_piece(pieces, move['extra'])
+    for piece in pieces:
+        if piece.piece_type == PieceType.PAWN:
+            piece.can_be_en_passented = False
+    if move['piece'].piece_type == PieceType.PAWN:
+        if abs(move['box']['row'] - move['piece'].row) == 2:
+            print('can be en passent')
+            move['piece'].can_be_en_passented = True
+    move['piece'].has_moved = True
     move['piece'].row = move['box']['row']
     move['piece'].column = move['box']['column']
-    move['piece'].has_moved = True
 
     return pieces
 
