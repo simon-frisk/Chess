@@ -28,22 +28,8 @@ class Agent:
 
         legal_moves = []
         for move in possible_moves:
-            pieces_copy = [copy.deepcopy(piece) for piece in pieces]
-            move_piece = board.get_piece(pieces_copy, {
-                'row': move['piece'].row,
-                'column': move['piece'].column
-            })
-            capture_piece = board.get_piece(pieces_copy, {
-                'row': move['capture'].row,
-                'column': move['capture'].column
-            }) if move['capture'] else None
-            extra_piece = board.get_piece(pieces_copy, {
-                'row': move['extra']['piece'].row,
-                'column': move['extra']['piece'].column
-            }) if move['extra'] else None
-            board.move_piece(pieces_copy, {
-                             'piece': move_piece, 'box': move['box'], 'capture': capture_piece, 'extra': {'piece': extra_piece, 'capture': None, 'extra': None, 'box': move['extra']['box']} if move['extra'] else None})
-            if not board.is_chess(pieces_copy, self.color):
+            after_move = board.pieces_after_move(pieces, move)
+            if not board.is_chess(after_move, self.color):
                 legal_moves.append(move)
 
         self.possible_moves = legal_moves
