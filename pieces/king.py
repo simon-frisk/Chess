@@ -31,7 +31,11 @@ class King(Piece):
                 piece = board.get_piece(pieces, board.get_box(row, column))
                 if piece:
                     possible = False
-                # if board.is_chess(board.pieces_after_move(pieces, ))
+                    break
+                if board.is_chess(board.pieces_after_move(pieces, board.get_move(self, board.get_box(row, column), None, None)), self.color):
+                    possible = False
+                    break
+
             if possible:
                 direction = 1 if self.column < rook.column else -1
                 extra_move = board.get_move(rook, board.get_box(
