@@ -24,7 +24,7 @@ pygame.display.set_icon(screen_icon)
 clock = pygame.time.Clock()
 
 player1 = StupidBot(PieceColor.WHITE)
-player2 = StupidBot(PieceColor.BLACK)
+player2 = SmartBot(PieceColor.BLACK)
 game = game.Game([player1, player2], board.init_pieces(BOX_WIDTH), BOX_WIDTH)
 
 while True:

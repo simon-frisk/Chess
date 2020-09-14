@@ -1,5 +1,5 @@
 from agents.agent import Agent
-from pieces.piece import PieceType
+from pieces.piece import PieceType, PieceColor
 import random
 import board
 
@@ -9,21 +9,34 @@ class SmartBot(Agent):
         moves = self.possible_moves.copy()
         random.shuffle(moves)
 
-        move = None
         for possible_move in moves:
+            points = 0
             pieces_after_move = board.pieces_after_move(pieces, possible_move)
             enemy_moves = enemy.find_possible_moves(pieces_after_move)
+            enemy_color = PieceColor.BLACK if self.color == PieceColor.WHITE else PieceColor.WHITE
 
-            is_bad = False
+            if possible_move['capture']:
+                if possible_move['capture'].piece_type == PieceType.QUEEN:
+                    points += 4
+                if possible_move['capture'].piece_type != PieceType.PAWN:
+                    points += 2
+            if len(enemy_moves) == 0:
+                is_chess = board.is_chess(pieces_after_move, enemy_color)
+                if is_chess:
+                    points += 10
+                else:
+                    points -= 10
             for enemy_move in enemy_moves:
                 if enemy_move['capture']:
+                    if enemy_move['capture'].piece_type == PieceType.QUEEN:
+                        points -= 4
                     if enemy_move['capture'].piece_type != PieceType.PAWN:
-                        is_bad = True
-            if not is_bad:
-                move = possible_move
+                        points -= 2
+            possible_move['points'] = points
+
+        points = [move['points'] for move in moves]
+        max_points = max(points)
+        for move in moves:
+            if move['points'] == max_points:
+                turn(move)
                 break
-
-        if not move:
-            move = random.choice(self.possible_moves)
-
-        turn(move)
