@@ -7,9 +7,9 @@ from pieces.piece import PieceColor, PieceType
 
 
 class Game:
-    def __init__(self, agents, pieces, box_width):
+    def __init__(self, agents, box_width):
         self._agents = agents
-        self.pieces = pieces
+        self.pieces = board.init_pieces(box_width)
         self.turn_agent.find_possible_moves(self.pieces)
         self.load_images(box_width)
         self.game_end = False
