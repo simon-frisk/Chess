@@ -4,6 +4,7 @@ import pygame
 import board
 import game
 import colors
+import text_select
 from agents.user import User
 from agents.stupid_bot import StupidBot
 from agents.smart_bot import SmartBot
@@ -37,6 +38,11 @@ while True:
             row = math.floor(event.pos[1] / BOX_WIDTH)
             column = math.floor(event.pos[0] / BOX_WIDTH)
             click = board.get_box(row, column)
+
+    text_click = text_select.get_text_select()
+    if text_click:
+        click = text_click
+        text_select.set_text_select(None)
 
     game.handle_turn(game.pieces, click)
     game.render(display_surface, BOX_WIDTH, colors.BLACK, colors.WHITE, font)
