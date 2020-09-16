@@ -24,7 +24,7 @@ pygame.display.set_icon(screen_icon)
 
 clock = pygame.time.Clock()
 
-player1 = StupidBot(PieceColor.WHITE)
+player1 = User(PieceColor.WHITE)
 player2 = SmartBot(PieceColor.BLACK)
 game = game.Game([player1, player2], BOX_WIDTH)
 
